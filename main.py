@@ -1,19 +1,30 @@
 # coded with the help of angels
+import re
 
+import num2words
 
 
 class Book:
-    def __init__(self,name):
-        pass
+    def __init__(self, name: str):
+        self.name = name
 
-    #  Takes a number and converts it into alphabetic form
-    def _convert_number_into_alpha(self,number :int):
-        pass
+    def _strip_amount_of_chapters(self,name :str):
+        reg = '[(].*[)]'
+        return re.search(reg, name)
+
 
     def _create_dialogue_file(self):
-        pass
+        contents = []
+        if self.name is 'The Song of Solomon':
+            # add Song of songs to dialogue file
+            contents.append('Song of Songs')
+        contents.append(self.name)
+        open('./dialogues/' + self.name + '.dialog').writelines(contents)
+
 
     def create_book(self):
+        self.name = self._strip_amount_of_chapters(self.name)
+        self._create_dialogue_file(self)
         pass
 
 
@@ -23,9 +34,13 @@ class Bible:
         self.book_list = book_list
 
     def create_all_dialogue_files(self):
+        for line in self.book_list:
+            book = Book(line)
+            book.create_book()
         pass
+
 
 if __name__ == '__main__':
     list = open('./books.list', 'r').read()
-
-
+    bible = Bible(list)
+    bible.create_all_dialogue_files()
