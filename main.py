@@ -1,4 +1,5 @@
 # coded with the help of angels
+import os
 import re
 import num2words
 
@@ -35,7 +36,7 @@ class Book:
             # add Song of songs to dialogue file
             contents.append('Song of Songs')
         contents.append(self.name)
-        open('./dialogues/' + self.name + '.dialog','w').writelines(contents)
+        open('./dialogues/' + self.name + '.dialog', 'w').writelines(contents)
 
 
     def create_book(self):
@@ -60,6 +61,7 @@ class Bible:
 
 
 if __name__ == '__main__':
+    os.mkdir('./dialogues')
     list = open('./books.list', 'r').readlines()
     bible = Bible(list)
     bible.create_all_dialogue_files()
