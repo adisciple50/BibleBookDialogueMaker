@@ -36,7 +36,12 @@ class Book:
             # add Song of songs to dialogue file
             contents.append('Song of Songs')
         contents.append(self.name)
-        open('./dialogues/' + self.name + '.dialog', 'w').writelines(contents)
+        filename = self.name.replace(' ', '.')
+        print(filename)
+        with open('./dialogues/' + str(filename) + '.dialog', 'w') as dialogue_file:
+            for dialogue in contents:
+                dialogue_file.write(dialogue)
+                dialogue_file.write('\n')
 
 
     def create_book(self):
@@ -61,7 +66,10 @@ class Bible:
 
 
 if __name__ == '__main__':
-    os.mkdir('./dialogues')
+    try:
+        os.mkdir('./dialogues')
+    except:
+        pass
     list = open('./books.list', 'r').readlines()
     bible = Bible(list)
     bible.create_all_dialogue_files()
