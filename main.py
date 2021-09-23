@@ -1,6 +1,5 @@
 # coded with the help of angels
 import re
-
 import num2words
 
 
@@ -11,6 +10,12 @@ class Book:
     def _strip_amount_of_chapters(self,name :str):
         reg = '[(].*[)]'
         return re.search(reg, name)
+
+    def _convert_numbers_to_alpha(self,name: str):
+        regex = r'^\d'
+        result = int(re.match(regex, name).group()[0])
+        return name.replace(str(result), num2words.num2words(result))
+
 
 
     def _create_dialogue_file(self):
@@ -24,6 +29,7 @@ class Book:
 
     def create_book(self):
         self.name = self._strip_amount_of_chapters(self.name)
+        self.name = self._convert_numbers_to_alpha(self.name)
         self._create_dialogue_file(self)
         pass
 
